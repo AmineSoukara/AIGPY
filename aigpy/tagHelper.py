@@ -14,7 +14,7 @@ import requests
 from mutagen import File
 from mutagen import flac
 from mutagen import mp4
-from mutagen.id3 import TALB, TCOP, TDRC, TIT2, TPE1, TRCK, APIC, TCON, TCOM, TSRC, USLT
+from mutagen.id3 import TALB, TCOP, TDRC, TIT2, TPE1, TRCK, APIC, TCON, TCOM, TSRC, USLT, COMM
 
 
 def __extension__(filepath: str):
@@ -78,7 +78,8 @@ class TagTool(object):
         self.composer = ''
         self.isrc = ''
         self.lyrics = ''
-
+        self.comment = ''
+        
         self.__load__()
 
     def save(self, coverPath: str = None):
@@ -139,6 +140,7 @@ class TagTool(object):
         self._handle.tags.add(TDRC(encoding=3, text=self.date))
         self._handle.tags.add(TCOM(encoding=3, text=self.composer))
         self._handle.tags.add(TSRC(encoding=3, text=self.isrc))
+        self._handle.tags.add(COMM(lang="eng", desc="my comment", text=self.comment))
         self._handle.tags.add(USLT(encoding=3, lang=u'eng', desc=u'desc', text=self.lyrics))
         self.__savePic__(coverPath)
         self._handle.save()
@@ -164,6 +166,7 @@ class TagTool(object):
         self._handle.tags['date'] = __tryStr__(self.date)
         self._handle.tags['composer'] = __tryStr__(self.composer)
         self._handle.tags['isrc'] = __tryStr__(self.isrc)
+        self._handle.tags["comment"] = __tryStr__(self.comment)
         self._handle.tags['lyrics'] = __tryStr__(self.lyrics)
         self.__savePic__(coverPath)
         self._handle.save()
