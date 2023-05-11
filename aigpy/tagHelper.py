@@ -188,6 +188,7 @@ class TagTool(object):
         self.date = self.__getTagItem__('date')
         self.composer = self.__getTagItem__('composer')
         self.isrc = self.__getTagItem__('isrc')
+        self.comment = self.__getTagItem__('comment')
         self.lyrics = self.__getTagItem__('lyrics')
 
     def __saveMp4__(self, coverPath):
